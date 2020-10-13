@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 20,
+                      height: 40,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -98,10 +98,44 @@ class MyApp extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          buildColumnWithRow("1","Elemental Tin Candel","29"),
-                          buildColumnWithRow("2","Summer Candel","23"),
-                          buildColumnWithRow("3","Winter candel","40"),
-                          buildColumnWithRow("4","dummy candel","60"),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          buildColumnWithRow("1", "Elemental Tin Candel", "29"),
+                          buildColumnWithRow("2", "Summer Candel", "23"),
+                          buildColumnWithRow("3", "Winter candel", "40"),
+                          buildColumnWithRow("4", "dummy candel", "60"),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    LineBar(),
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Holiday Special",
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Spacer(),
+                          Text(
+                            "View All",
+                            style: TextStyle(fontSize: 20, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          buildbottomContainer(),
+                          buildbottomContainer(),
+                          buildbottomContainer(),
+                          buildbottomContainer(),
                         ],
                       ),
                     )
@@ -115,7 +149,49 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Padding buildColumnWithRow(String img,String title,String price) {
+  Container buildbottomContainer() {
+    return Container(
+      height: 150,
+      width: 230,
+      margin: EdgeInsets.only(left: 20),
+      child: Row(
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: SizedBox(
+                  height: 120,
+                  width: 100,
+                  child: Image.asset(
+                    "assets/images/candel3.jpg",
+                    fit: BoxFit.cover,
+                  ))),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Coconut Milk Bath"),
+                Text(
+                  "16 oz",
+                  style: TextStyle(color: Colors.grey, fontSize: 18),
+                ),
+                Spacer(),
+                Text(
+                  "\$ 28",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding buildColumnWithRow(String img, String title, String price) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -188,6 +264,37 @@ class MyApp extends StatelessWidget {
       ),
       shape: StadiumBorder(),
       color: isSelected ? Colors.pink[100] : Colors.grey[300],
+    );
+  }
+}
+
+class LineBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // print(MediaQuery.of(context).size.height);
+    return Container(
+      height: 5,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.only(left: 40),
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          bottomLeft: Radius.circular(10),
+        ),
+      ),
+      child: Container(
+        height: 5,
+        width: 100,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+          ),
+        ),
+      ),
     );
   }
 }
