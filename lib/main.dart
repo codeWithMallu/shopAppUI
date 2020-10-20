@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'DetailsPage.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -18,12 +20,13 @@ class MyApp extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),),
-                    boxShadow: [
-                      BoxShadow(blurRadius: 20,color: Colors.grey[300],spreadRadius: 1)
-                    ]
-                    ),
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 20, color: Colors.grey[300], spreadRadius: 1)
+                ]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -120,22 +123,7 @@ class MyApp extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            buildColumnWithRow(
-                                "1", "Elemental Tin Candel", "29"),
-                            buildColumnWithRow("2", "Summer Candel", "23"),
-                            buildColumnWithRow("3", "Winter candel", "40"),
-                            buildColumnWithRow("4", "dummy candel", "60"),
-                          ],
-                        ),
-                      ),
+                      MyCandelsList(),
                       SizedBox(
                         height: 20,
                       ),
@@ -236,41 +224,6 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Padding buildColumnWithRow(String img, String title, String price) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Container(
-            height: 220,
-            width: 160,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                "assets/images/candel$img.jpg",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            title,
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "\$ $price",
-            style: TextStyle(fontSize: 20),
-          ),
-        ],
-      ),
-    );
-  }
-
   Column buildColumnAtTop(String text, {bool isSelected = false}) {
     return Column(
       children: [
@@ -309,6 +262,70 @@ class MyApp extends StatelessWidget {
       ),
       shape: StadiumBorder(),
       color: isSelected ? Colors.pink[100] : Colors.grey[300],
+    );
+  }
+}
+
+class MyCandelsList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          SizedBox(
+            width: 20,
+          ),
+          buildColumnWithRow("1", "Elemental Tin Candel", "29", context),
+          buildColumnWithRow("2", "Summer Candel", "23", context),
+          buildColumnWithRow("3", "Winter candel", "40", context),
+          buildColumnWithRow("4", "dummy candel", "60", context),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector buildColumnWithRow(
+      String img, String title, String price, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return DetailsPage();
+        }));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Container(
+              height: 220,
+              width: 160,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  "assets/images/candel$img.jpg",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              title,
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "\$ $price",
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
