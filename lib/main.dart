@@ -291,7 +291,7 @@ class MyCandelsList extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return DetailsPage();
+          return DetailsPage(title: title,img: img,context: context,price: price,);
         }));
       },
       child: Padding(
